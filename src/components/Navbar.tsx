@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { Brain, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import AuthButtons from "./AuthButtons";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
+  const { user } = useAuth();
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
@@ -25,6 +26,9 @@ const Navbar = () => {
           <a href="#topics" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">主題</a>
           <a href="#articles" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">文章</a>
           <a href="#about" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">關於</a>
+          {user && (
+            <a href="/content" className="text-sm font-sans font-semibold text-primary hover:text-primary/80 transition-colors">會員專區</a>
+          )}
           <AuthButtons />
         </div>
 
@@ -49,6 +53,9 @@ const Navbar = () => {
             <a href="#topics" onClick={() => setOpen(false)} className="text-sm font-sans text-muted-foreground hover:text-foreground">主題</a>
             <a href="#articles" onClick={() => setOpen(false)} className="text-sm font-sans text-muted-foreground hover:text-foreground">文章</a>
             <a href="#about" onClick={() => setOpen(false)} className="text-sm font-sans text-muted-foreground hover:text-foreground">關於</a>
+            {user && (
+              <a href="/content" onClick={() => setOpen(false)} className="text-sm font-sans font-semibold text-primary hover:text-primary/80">會員專區</a>
+            )}
           </div>
         </motion.div>
       )}
