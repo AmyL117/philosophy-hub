@@ -14,8 +14,8 @@ type VideoAccessTier = "free" | "paid" | "premium";
 
 const ACCESS_LABELS: Record<VideoAccessTier, string> = {
   free: "免費",
-  paid: "付費",
-  premium: "尊貴",
+  paid: "收費",
+  premium: "收費",
 };
 
 const ACCESS_COLORS: Record<VideoAccessTier, string> = {
