@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Brain, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import AuthButtons from "./AuthButtons";
 
 const Navbar = () => {
