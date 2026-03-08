@@ -138,6 +138,16 @@ const VideoManagement = () => {
     },
   });
 
+  const quickTierMutation = useMutation({
+    mutationFn: async ({ id, tier }: { id: string; tier: VideoAccessTier }) => {
+      const { error } = await supabase.from("videos").update({ access_tier: tier }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+    },
+  });
+
   const resetNewForm = () => {
     setAdding(false);
     setNewTitle("");
@@ -278,12 +288,26 @@ const VideoManagement = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-sm font-sans font-semibold text-foreground truncate">{v.title}</span>
-                    <Badge className={`${ACCESS_COLORS[v.access_tier as VideoAccessTier]} text-[10px] font-sans shrink-0`}>
-                      {ACCESS_LABELS[v.access_tier as VideoAccessTier]}
-                    </Badge>
                     <Badge variant="outline" className="text-[10px] font-sans shrink-0">{v.category}</Badge>
                   </div>
                   {v.description && <p className="text-xs text-muted-foreground font-sans mt-1 truncate">{v.description}</p>}
+                  <div className="flex gap-1.5 mt-2">
+                    {(["free", "paid"] as VideoAccessTier[]).map(tier => (
+                      <button
+                        key={tier}
+                        onClick={() => quickTierMutation.mutate({ id: v.id, tier })}
+                        className={`px-2.5 py-1 rounded-full text-[11px] font-sans transition-all border ${
+                          v.access_tier === tier
+                            ? tier === "free"
+                              ? "bg-muted text-foreground border-muted-foreground/30"
+                              : "bg-primary/20 text-primary border-primary/30"
+                            : "bg-transparent text-muted-foreground border-transparent hover:border-border hover:bg-muted/30"
+                        }`}
+                      >
+                        {ACCESS_LABELS[tier]}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
