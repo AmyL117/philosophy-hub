@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { BookOpen, Users, Lightbulb, Clock, TrendingUp, Globe } from "lucide-react";
+import ResourceEditor from "./ResourceEditor";
 
 const stats = [
   { icon: BookOpen, label: "精選文章", value: "120+", desc: "深度哲學與心理學分析", color: "text-primary" },
@@ -51,6 +52,7 @@ const StatsSection = () => {
             </motion.div>
           ))}
         </div>
+        <ResourceEditor sectionKey="stats" />
       </div>
     </section>
   );

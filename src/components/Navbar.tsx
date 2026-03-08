@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Brain, Menu, X } from "lucide-react";
 import { useState } from "react";
+import AuthButtons from "./AuthButtons";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -24,12 +25,16 @@ const Navbar = () => {
           <a href="#topics" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">主題</a>
           <a href="#articles" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">文章</a>
           <a href="#about" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">關於</a>
+          <AuthButtons />
         </div>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="md:hidden text-foreground">
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <AuthButtons />
+          <button onClick={() => setOpen(!open)} className="text-foreground">
+            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

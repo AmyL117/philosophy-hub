@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Brain, Eye, Heart, Compass, Puzzle, Flame, Leaf, Zap } from "lucide-react";
+import ResourceEditor from "./ResourceEditor";
 
 const topics = [
   {
@@ -105,6 +106,7 @@ const TopicsSection = () => {
             </motion.div>
           ))}
         </div>
+        <ResourceEditor sectionKey="topics" />
       </div>
     </section>
   );
