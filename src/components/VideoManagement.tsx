@@ -145,7 +145,7 @@ const VideoManagement = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
-    },
+  });
 
   const resetNewForm = () => {
     setAdding(false);
