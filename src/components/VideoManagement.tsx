@@ -138,6 +138,15 @@ const VideoManagement = () => {
     },
   });
 
+  const quickTierMutation = useMutation({
+    mutationFn: async ({ id, tier }: { id: string; tier: VideoAccessTier }) => {
+      const { error } = await supabase.from("videos").update({ access_tier: tier }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+    },
+
   const resetNewForm = () => {
     setAdding(false);
     setNewTitle("");
