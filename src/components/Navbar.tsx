@@ -26,6 +26,9 @@ const Navbar = () => {
           <a href="#topics" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">主題</a>
           <a href="#articles" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">文章</a>
           <a href="#about" className="text-sm font-sans text-muted-foreground hover:text-foreground transition-colors">關於</a>
+          {user && (
+            <a href="/content" className="text-sm font-sans font-semibold text-primary hover:text-primary/80 transition-colors">會員專區</a>
+          )}
           <AuthButtons />
         </div>
 
