@@ -14,8 +14,8 @@ type VideoAccessTier = "free" | "paid" | "premium";
 
 const ACCESS_LABELS: Record<VideoAccessTier, string> = {
   free: "免費",
-  paid: "付費",
-  premium: "尊貴",
+  paid: "收費",
+  premium: "收費",
 };
 
 const ACCESS_COLORS: Record<VideoAccessTier, string> = {
@@ -200,9 +200,8 @@ const VideoManagement = () => {
             <Select value={newTier} onValueChange={v => setNewTier(v as VideoAccessTier)}>
               <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="free" className="text-sm">免費觀看</SelectItem>
-                <SelectItem value="paid" className="text-sm">付費會員</SelectItem>
-                <SelectItem value="premium" className="text-sm">尊貴會員</SelectItem>
+                <SelectItem value="free" className="text-sm">免費影片</SelectItem>
+                <SelectItem value="paid" className="text-sm">收費影片</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -265,9 +264,8 @@ const VideoManagement = () => {
                     <Select value={editTier} onValueChange={v => setEditTier(v as VideoAccessTier)}>
                       <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="free" className="text-sm">免費觀看</SelectItem>
-                        <SelectItem value="paid" className="text-sm">付費會員</SelectItem>
-                        <SelectItem value="premium" className="text-sm">尊貴會員</SelectItem>
+                        <SelectItem value="free" className="text-sm">免費影片</SelectItem>
+                        <SelectItem value="paid" className="text-sm">收費影片</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
