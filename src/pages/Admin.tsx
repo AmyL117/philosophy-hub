@@ -130,10 +130,14 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="resources" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="resources" className="flex items-center gap-2 font-sans">
               <FolderOpen className="w-4 h-4" />
               資源管理
+            </TabsTrigger>
+            <TabsTrigger value="videos" className="flex items-center gap-2 font-sans">
+              <Video className="w-4 h-4" />
+              影片管理
             </TabsTrigger>
             <TabsTrigger value="members" className="flex items-center gap-2 font-sans">
               <Users className="w-4 h-4" />
