@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Clock, Eye } from "lucide-react";
+import ResourceEditor from "./ResourceEditor";
 
 const articles = [
   {
