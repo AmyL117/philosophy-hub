@@ -115,6 +115,45 @@ export type Database = {
         }
         Relationships: []
       }
+      videos: {
+        Row: {
+          access_tier: Database["public"]["Enums"]["video_access_tier"]
+          category: string
+          created_at: string
+          description: string | null
+          drive_file_id: string | null
+          drive_link: string
+          id: string
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          access_tier?: Database["public"]["Enums"]["video_access_tier"]
+          category?: string
+          created_at?: string
+          description?: string | null
+          drive_file_id?: string | null
+          drive_link: string
+          id?: string
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          access_tier?: Database["public"]["Enums"]["video_access_tier"]
+          category?: string
+          created_at?: string
+          description?: string | null
+          drive_file_id?: string | null
+          drive_link?: string
+          id?: string
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -125,6 +164,7 @@ export type Database = {
     }
     Enums: {
       membership_tier: "free_member" | "paid_member" | "premium_member"
+      video_access_tier: "free" | "paid" | "premium"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -253,6 +293,7 @@ export const Constants = {
   public: {
     Enums: {
       membership_tier: ["free_member", "paid_member", "premium_member"],
+      video_access_tier: ["free", "paid", "premium"],
     },
   },
 } as const

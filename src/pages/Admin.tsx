@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Plus, Trash2, Pencil, Check, X, ExternalLink, GripVertical, Users, FolderOpen } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Pencil, Check, X, ExternalLink, GripVertical, Users, FolderOpen, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MemberManagement from "@/components/MemberManagement";
+import VideoManagement from "@/components/VideoManagement";
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -129,10 +130,14 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="resources" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="resources" className="flex items-center gap-2 font-sans">
               <FolderOpen className="w-4 h-4" />
               資源管理
+            </TabsTrigger>
+            <TabsTrigger value="videos" className="flex items-center gap-2 font-sans">
+              <Video className="w-4 h-4" />
+              影片管理
             </TabsTrigger>
             <TabsTrigger value="members" className="flex items-center gap-2 font-sans">
               <Users className="w-4 h-4" />
@@ -246,6 +251,10 @@ const Admin = () => {
                 )}
               </div>
             </div>
+          </TabsContent>
+
+          <TabsContent value="videos">
+            <VideoManagement />
           </TabsContent>
 
           <TabsContent value="members">
