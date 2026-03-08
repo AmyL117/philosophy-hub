@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import type { User } from "@supabase/supabase-js";
 
-const ADMIN_EMAIL = "silvestersss89@gmail.com";
+const ADMIN_EMAILS = ["silvestersss89@gmail.com", "amypy117@gmail.com"];
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
