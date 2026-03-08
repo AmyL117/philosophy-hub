@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, Pencil, Check, X, Video, Film } from "lucide-react";
+import { Plus, Trash2, Pencil, Check, X, Video, Film, GripVertical, ChevronUp, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
@@ -122,6 +122,22 @@ const VideoManagement = () => {
     },
   });
 
+  const moveMutation = useMutation({
+    mutationFn: async ({ id, direction }: { id: string; direction: "up" | "down" }) => {
+      const idx = filtered.findIndex(v => v.id === id);
+      if (idx < 0) return;
+      const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+      if (swapIdx < 0 || swapIdx >= filtered.length) return;
+      const current = filtered[idx];
+      const swap = filtered[swapIdx];
+      await supabase.from("videos").update({ sort_order: swap.sort_order }).eq("id", current.id);
+      await supabase.from("videos").update({ sort_order: current.sort_order }).eq("id", swap.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+    },
+  });
+
   const resetNewForm = () => {
     setAdding(false);
     setNewTitle("");
@@ -213,6 +229,25 @@ const VideoManagement = () => {
               exit={{ opacity: 0, y: -10 }}
               className="flex items-start gap-3 p-4 rounded-lg border border-border bg-card"
             >
+              {/* Sort controls */}
+              <div className="flex flex-col gap-0.5 pt-0.5 shrink-0">
+                <button
+                  onClick={() => moveMutation.mutate({ id: v.id, direction: "up" })}
+                  disabled={filtered.indexOf(v) === 0}
+                  className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
+                >
+                  <ChevronUp className="w-4 h-4" />
+                </button>
+                <GripVertical className="w-4 h-4 text-muted-foreground/40 mx-auto" />
+                <button
+                  onClick={() => moveMutation.mutate({ id: v.id, direction: "down" })}
+                  disabled={filtered.indexOf(v) === filtered.length - 1}
+                  className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              </div>
+
               <Film className="w-5 h-5 text-primary shrink-0 mt-0.5" />
 
               {editingId === v.id ? (
