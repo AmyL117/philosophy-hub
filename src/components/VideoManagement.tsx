@@ -138,6 +138,7 @@ const VideoManagement = () => {
     },
   });
 
+  const resetNewForm = () => {
     setAdding(false);
     setNewTitle("");
     setNewDesc("");
