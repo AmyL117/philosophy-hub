@@ -85,15 +85,46 @@ export type Database = {
           },
         ]
       }
+      user_memberships: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          email: string
+          id: string
+          tier: Database["public"]["Enums"]["membership_tier"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          email: string
+          id?: string
+          tier?: Database["public"]["Enums"]["membership_tier"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          email?: string
+          id?: string
+          tier?: Database["public"]["Enums"]["membership_tier"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_user_tier: { Args: { p_user_id: string }; Returns: string }
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      membership_tier: "free_member" | "paid_member" | "premium_member"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -220,6 +251,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      membership_tier: ["free_member", "paid_member", "premium_member"],
+    },
   },
 } as const
