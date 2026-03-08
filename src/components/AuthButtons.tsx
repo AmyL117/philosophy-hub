@@ -14,9 +14,9 @@ const TIER_ICONS: Record<MembershipTier, typeof User> = {
 };
 
 const TIER_BADGE_COLORS: Record<MembershipTier, string> = {
-  free_member: "bg-muted/50 text-muted-foreground border-border",
+  free_member: "bg-muted/50 text-foreground/70 border-border",
   paid_member: "bg-primary/15 text-primary border-primary/30",
-  premium_member: "bg-accent/15 text-accent border-accent/30",
+  premium_member: "bg-secondary/15 text-secondary border-secondary/30",
 };
 
 const AuthButtons = () => {
@@ -42,10 +42,10 @@ const AuthButtons = () => {
   return (
     <div className="flex items-center gap-2">
       {/* User info badge */}
-      <div className={`hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-sans ${TIER_BADGE_COLORS[currentTier]}`}>
-        <TierIcon className="w-3 h-3" />
-        <span className="max-w-[120px] truncate">{user.email}</span>
-        <span className="opacity-60">·</span>
+      <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-sans ${TIER_BADGE_COLORS[currentTier]}`}>
+        <TierIcon className="w-3.5 h-3.5" />
+        <span className="max-w-[140px] truncate">{user.email}</span>
+        <span className="opacity-50">·</span>
         <span className="font-semibold whitespace-nowrap">{TIER_LABELS[currentTier]}</span>
       </div>
 
