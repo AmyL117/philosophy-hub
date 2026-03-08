@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Brain, BookOpen, Shuffle, Lock, Crown } from "lucide-react";
+import { Brain, BookOpen, Shuffle, Lock, Crown, ExternalLink } from "lucide-react";
 
 const folders = [
   {
