@@ -1,0 +1,1 @@
+ALTER TABLE public.user_memberships DROP CONSTRAINT IF EXISTS user_memberships_user_id_fkey;
