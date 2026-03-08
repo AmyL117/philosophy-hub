@@ -6,7 +6,7 @@ import AuthButtons from "./AuthButtons";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
+  const { user } = useAuth();
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
