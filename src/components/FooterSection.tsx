@@ -8,7 +8,7 @@ const FooterSection = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Brain className="w-6 h-6 text-primary" />
-              <span className="font-serif font-bold text-lg text-foreground">IU · 思維實驗室</span>
+              <span className="font-serif font-bold text-lg text-foreground">ME TIME · 思維實驗室</span>
             </div>
             <p className="text-sm text-muted-foreground font-sans leading-relaxed">
               一個致力於推廣哲學與心理學知識的平台，以深入淺出的方式探索人類思維的奧秘。
@@ -40,7 +40,7 @@ const FooterSection = () => {
 
         <div className="pt-8 border-t border-border text-center">
           <p className="text-xs text-muted-foreground font-sans">
-            © {new Date().getFullYear()} IU · 思維實驗室. All rights reserved.
+            © {new Date().getFullYear()} ME TIME · 思維實驗室. All rights reserved.
           </p>
         </div>
       </div>
