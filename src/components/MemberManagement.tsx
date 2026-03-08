@@ -62,6 +62,30 @@ const MemberManagement = () => {
     },
   });
 
+  const addMemberMutation = useMutation({
+    mutationFn: async () => {
+      // Generate a placeholder user_id for manually added members
+      const { error } = await supabase.from("user_memberships").insert({
+        email: newEmail,
+        display_name: newDisplayName || null,
+        tier: newTier,
+        user_id: crypto.randomUUID(),
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user_memberships"] });
+      toast({ title: "已新增", description: `已新增會員 ${newEmail}` });
+      setAdding(false);
+      setNewEmail("");
+      setNewDisplayName("");
+      setNewTier("free_member");
+    },
+    onError: (err: any) => {
+      toast({ title: "新增失敗", description: err.message, variant: "destructive" });
+    },
+  });
+
   const filtered = filter === "all" ? members : members.filter((m) => m.tier === filter);
 
   const tierCounts = {
