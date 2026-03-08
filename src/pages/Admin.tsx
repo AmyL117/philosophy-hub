@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Plus, Trash2, Pencil, Check, X, ExternalLink, GripVertical, Users, FolderOpen } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Pencil, Check, X, ExternalLink, GripVertical, Users, FolderOpen, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MemberManagement from "@/components/MemberManagement";
+import VideoManagement from "@/components/VideoManagement";
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAuth();
