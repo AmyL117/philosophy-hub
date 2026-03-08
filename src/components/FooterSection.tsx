@@ -40,7 +40,7 @@ const FooterSection = () => {
 
         <div className="pt-8 border-t border-border text-center">
           <p className="text-xs text-muted-foreground font-sans">
-            © {new Date().getFullYear()} IU · 思維實驗室. All rights reserved.
+            © {new Date().getFullYear()} ME TIME · 思維實驗室. All rights reserved.
           </p>
         </div>
       </div>

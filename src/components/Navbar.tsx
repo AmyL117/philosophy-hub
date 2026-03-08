@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <a href="/" className="flex items-center gap-2">
           <Brain className="w-6 h-6 text-primary" />
-          <span className="font-serif font-bold text-lg text-foreground">IU · 思維實驗室</span>
+          <span className="font-serif font-bold text-lg text-foreground">ME TIME · 思維實驗室</span>
         </a>
 
         {/* Desktop nav */}

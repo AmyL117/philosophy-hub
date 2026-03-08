@@ -53,7 +53,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-muted-foreground font-sans max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          由 <span className="text-foreground font-semibold">IU</span> 主理，深入探索存在主義、認知心理學、正念冥想等領域。
+          由 <span className="text-foreground font-semibold">ME TIME</span> 主理，深入探索存在主義、認知心理學、正念冥想等領域。
           以數據驅動的方式，帶你走進人類思維的奧秘。
         </motion.p>
 
