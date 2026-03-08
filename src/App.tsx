@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { EditModeProvider } from "@/contexts/EditModeContext";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
+import ContentTabs from "./pages/ContentTabs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
