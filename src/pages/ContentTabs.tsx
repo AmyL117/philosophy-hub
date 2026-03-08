@@ -19,9 +19,9 @@ const ACCESS_LABELS: Record<VideoAccessTier, string> = {
 };
 
 const categories = [
-  { key: "心理學", label: "心理學", icon: Brain, requiresPaid: false },
-  { key: "哲學", label: "哲學", icon: BookOpen, requiresPaid: true },
-  { key: "交叉", label: "交叉", icon: Shuffle, requiresPaid: true },
+  { key: "心理學", label: "心理學", icon: Brain, requiresPaid: false, folderId: "15Ns80m2f6dYC8CIL1mAfD92IFBGKNgbZ" },
+  { key: "哲學", label: "哲學", icon: BookOpen, requiresPaid: true, folderId: "1BnZ2DcjU3VUHGeyVdqkeagrKKqMlnVWG" },
+  { key: "交叉", label: "交叉", icon: Shuffle, requiresPaid: true, folderId: "1cfwx3IPtPSGnMOn1tDfbJUhGYnvKN5U4" },
 ];
 
 const ContentTabs = () => {
