@@ -3,13 +3,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import type { User } from "@supabase/supabase-js";
 
-const ADMIN_EMAIL = "silvestersss89@gmail.com";
+const ADMIN_EMAILS = ["silvestersss89@gmail.com", "amypy117@gmail.com"];
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [viewAsAdmin, setViewAsAdmin] = useState(true);
-  const isRealAdmin = user?.email === ADMIN_EMAIL;
+  const isRealAdmin = ADMIN_EMAILS.includes(user?.email ?? "");
   const isAdmin = isRealAdmin && viewAsAdmin;
 
   useEffect(() => {
