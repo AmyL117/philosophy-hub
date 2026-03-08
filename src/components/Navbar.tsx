@@ -53,6 +53,9 @@ const Navbar = () => {
             <a href="#topics" onClick={() => setOpen(false)} className="text-sm font-sans text-muted-foreground hover:text-foreground">主題</a>
             <a href="#articles" onClick={() => setOpen(false)} className="text-sm font-sans text-muted-foreground hover:text-foreground">文章</a>
             <a href="#about" onClick={() => setOpen(false)} className="text-sm font-sans text-muted-foreground hover:text-foreground">關於</a>
+            {user && (
+              <a href="/content" onClick={() => setOpen(false)} className="text-sm font-sans font-semibold text-primary hover:text-primary/80">會員專區</a>
+            )}
           </div>
         </motion.div>
       )}
