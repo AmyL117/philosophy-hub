@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Brain, BookOpen, Shuffle, Lock, Crown } from "lucide-react";
+import { Brain, BookOpen, Shuffle, Lock, Crown, ExternalLink } from "lucide-react";
 
 const folders = [
   {
@@ -92,20 +92,25 @@ const ContentTabs = () => {
                   </p>
                 </div>
               ) : (
-                <div className="rounded-xl border border-border overflow-hidden bg-card">
+              <div className="rounded-xl border border-border bg-card p-8 text-center space-y-4">
                   {canEdit && (
-                    <div className="px-4 py-2 bg-accent/10 border-b border-border text-xs font-sans text-accent flex items-center gap-1.5">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 text-xs font-sans text-accent mb-2">
                       <Crown className="w-3 h-3" />
                       尊貴會員：你可以檢視、更改及刪除影片
                     </div>
                   )}
-                  <iframe
-                    src={`https://drive.google.com/embeddedfolderview?id=${f.folderId}#grid`}
-                    className="w-full border-0"
-                    style={{ height: "calc(100vh - 280px)", minHeight: "500px" }}
-                    title={f.label}
-                    allowFullScreen
-                  />
+                  <f.icon className="w-12 h-12 text-primary mx-auto" />
+                  <h3 className="text-xl font-serif font-bold text-foreground">{f.label}影片資料夾</h3>
+                  <p className="text-sm text-muted-foreground font-sans">點擊下方連結前往 Google Drive 觀看影片</p>
+                  <a
+                    href={`https://drive.google.com/drive/folders/${f.folderId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-sans text-sm font-semibold hover:opacity-90 transition-opacity"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    開啟影片資料夾
+                  </a>
                 </div>
               )}
             </TabsContent>
