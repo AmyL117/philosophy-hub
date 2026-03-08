@@ -1,9 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Users, Crown, Star, User } from "lucide-react";
+import { Trash2, Users, Crown, Star, User, Plus, X } from "lucide-react";
 import { TIER_LABELS, TIER_COLORS, type MembershipTier } from "@/hooks/useMembership";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,6 +20,10 @@ const MemberManagement = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [filter, setFilter] = useState<string>("all");
+  const [adding, setAdding] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [newDisplayName, setNewDisplayName] = useState("");
+  const [newTier, setNewTier] = useState<MembershipTier>("free_member");
 
   const { data: members = [], isLoading } = useQuery({
     queryKey: ["user_memberships"],
@@ -54,6 +59,30 @@ const MemberManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user_memberships"] });
       toast({ title: "已刪除", description: "會員已移除" });
+    },
+  });
+
+  const addMemberMutation = useMutation({
+    mutationFn: async () => {
+      // Generate a placeholder user_id for manually added members
+      const { error } = await supabase.from("user_memberships").insert({
+        email: newEmail,
+        display_name: newDisplayName || null,
+        tier: newTier,
+        user_id: crypto.randomUUID(),
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user_memberships"] });
+      toast({ title: "已新增", description: `已新增會員 ${newEmail}` });
+      setAdding(false);
+      setNewEmail("");
+      setNewDisplayName("");
+      setNewTier("free_member");
+    },
+    onError: (err: any) => {
+      toast({ title: "新增失敗", description: err.message, variant: "destructive" });
     },
   });
 
@@ -95,6 +124,39 @@ const MemberManagement = () => {
           </button>
         ))}
       </div>
+
+      {/* Add member */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-sans font-semibold text-muted-foreground">會員列表</h3>
+        <Button size="sm" onClick={() => setAdding(true)} disabled={adding} className="h-8 text-xs font-sans">
+          <Plus className="w-3 h-3 mr-1" />新增會員
+        </Button>
+      </div>
+
+      {adding && (
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-lg border border-primary/30 bg-muted/20 space-y-3">
+          <Input value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="電子郵件 *" className="text-sm" />
+          <Input value={newDisplayName} onChange={e => setNewDisplayName(e.target.value)} placeholder="顯示名稱（選填）" className="text-sm" />
+          <Select value={newTier} onValueChange={(v) => setNewTier(v as MembershipTier)}>
+            <SelectTrigger className="h-9 text-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="free_member" className="text-sm">一般會員</SelectItem>
+              <SelectItem value="paid_member" className="text-sm">付費會員</SelectItem>
+              <SelectItem value="premium_member" className="text-sm">尊貴會員</SelectItem>
+            </SelectContent>
+          </Select>
+          <div className="flex gap-2">
+            <Button size="sm" onClick={() => addMemberMutation.mutate()} disabled={!newEmail.trim()} className="text-xs">
+              <Plus className="w-3 h-3 mr-1" />新增
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => { setAdding(false); setNewEmail(""); setNewDisplayName(""); setNewTier("free_member"); }} className="text-xs">
+              <X className="w-3 h-3 mr-1" />取消
+            </Button>
+          </div>
+        </motion.div>
+      )}
 
       {/* Member list */}
       <div className="space-y-2">
