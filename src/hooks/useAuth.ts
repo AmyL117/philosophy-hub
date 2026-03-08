@@ -36,5 +36,5 @@ export function useAuth() {
     await supabase.auth.signOut();
   };
 
-  return { user, loading, isAdmin, signInWithGoogle, signOut };
+  return { user, loading, isAdmin, isRealAdmin, viewAsAdmin, setViewAsAdmin, signInWithGoogle, signOut };
 }
