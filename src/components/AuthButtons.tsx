@@ -1,11 +1,12 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useEditMode } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, Pencil, PencilOff, Settings } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { LogIn, LogOut, Pencil, PencilOff, Settings, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const AuthButtons = () => {
-  const { user, loading, isAdmin, signInWithGoogle, signOut } = useAuth();
+  const { user, loading, isAdmin, isRealAdmin, viewAsAdmin, setViewAsAdmin, signInWithGoogle, signOut } = useAuth();
   const { editMode, setEditMode } = useEditMode();
   const navigate = useNavigate();
 
@@ -22,6 +23,20 @@ const AuthButtons = () => {
 
   return (
     <div className="flex items-center gap-2">
+      {isRealAdmin && (
+        <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/30 border border-border">
+          <Eye className="w-3.5 h-3.5 text-muted-foreground" />
+          <span className="text-[10px] font-sans text-muted-foreground">{viewAsAdmin ? "管理員" : "會員"}</span>
+          <Switch
+            checked={viewAsAdmin}
+            onCheckedChange={(v) => {
+              setViewAsAdmin(v);
+              if (!v) setEditMode(false);
+            }}
+            className="scale-75 origin-center"
+          />
+        </div>
+      )}
       {isAdmin && (
         <>
           <Button

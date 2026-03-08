@@ -8,7 +8,9 @@ const ADMIN_EMAIL = "silvestersss89@gmail.com";
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const isAdmin = user?.email === ADMIN_EMAIL;
+  const [viewAsAdmin, setViewAsAdmin] = useState(true);
+  const isRealAdmin = user?.email === ADMIN_EMAIL;
+  const isAdmin = isRealAdmin && viewAsAdmin;
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -34,5 +36,5 @@ export function useAuth() {
     await supabase.auth.signOut();
   };
 
-  return { user, loading, isAdmin, signInWithGoogle, signOut };
+  return { user, loading, isAdmin, isRealAdmin, viewAsAdmin, setViewAsAdmin, signInWithGoogle, signOut };
 }
