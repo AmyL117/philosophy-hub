@@ -20,6 +20,10 @@ const MemberManagement = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [filter, setFilter] = useState<string>("all");
+  const [adding, setAdding] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [newDisplayName, setNewDisplayName] = useState("");
+  const [newTier, setNewTier] = useState<MembershipTier>("free_member");
 
   const { data: members = [], isLoading } = useQuery({
     queryKey: ["user_memberships"],
