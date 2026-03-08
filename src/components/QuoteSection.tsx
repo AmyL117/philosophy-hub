@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Quote } from "lucide-react";
+import ResourceEditor from "./ResourceEditor";
 
 const quotes = [
   { text: "未經審視的人生不值得過。", author: "蘇格拉底", field: "古希臘哲學" },
