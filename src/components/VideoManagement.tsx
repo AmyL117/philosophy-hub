@@ -226,115 +226,115 @@ const VideoManagement = () => {
         </motion.div>
       )}
 
-      {/* Video list */}
-      <div className="space-y-2">
+      {/* Video grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <AnimatePresence>
-          {filtered.map(v => (
+          {filtered.map((v, idx) => (
             <motion.div
               key={v.id}
               layout
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="flex items-start gap-3 p-4 rounded-lg border border-border bg-card"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="rounded-lg border border-border bg-card overflow-hidden group"
             >
-              {/* Sort controls */}
-              <div className="flex flex-col gap-0.5 pt-0.5 shrink-0">
-                <button
-                  onClick={() => moveMutation.mutate({ id: v.id, direction: "up" })}
-                  disabled={filtered.indexOf(v) === 0}
-                  className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
-                >
-                  <ChevronUp className="w-4 h-4" />
-                </button>
-                <GripVertical className="w-4 h-4 text-muted-foreground/40 mx-auto" />
-                <button
-                  onClick={() => moveMutation.mutate({ id: v.id, direction: "down" })}
-                  disabled={filtered.indexOf(v) === filtered.length - 1}
-                  className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
-                >
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-              </div>
-
-              <Film className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-
               {editingId === v.id ? (
-                <div className="flex-1 space-y-2">
+                <div className="p-3 space-y-2">
                   <Input value={editTitle} onChange={e => setEditTitle(e.target.value)} placeholder="標題" className="text-sm" />
                   <Input value={editLink} onChange={e => setEditLink(e.target.value)} placeholder="Google Drive 連結" className="text-sm" />
                   <Textarea value={editDesc} onChange={e => setEditDesc(e.target.value)} placeholder="描述" className="min-h-[60px] text-sm" />
-                  <div className="grid grid-cols-2 gap-3">
-                    <Select value={editCategory} onValueChange={setEditCategory}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {CATEGORIES.map(c => <SelectItem key={c} value={c} className="text-sm">{c}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    <Select value={editTier} onValueChange={v => setEditTier(v as VideoAccessTier)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="free" className="text-sm">免費影片</SelectItem>
-                        <SelectItem value="paid" className="text-sm">收費影片</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <Select value={editCategory} onValueChange={setEditCategory}>
+                    <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES.map(c => <SelectItem key={c} value={c} className="text-sm">{c}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                   <div className="flex gap-2">
-                    <Button size="sm" onClick={() => updateMutation.mutate(v.id)} className="text-xs"><Check className="w-3 h-3 mr-1" />儲存</Button>
-                    <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="text-xs"><X className="w-3 h-3 mr-1" />取消</Button>
+                    <Button size="sm" onClick={() => updateMutation.mutate(v.id)} className="text-xs flex-1"><Check className="w-3 h-3 mr-1" />儲存</Button>
+                    <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="text-xs"><X className="w-3 h-3" /></Button>
                   </div>
                 </div>
               ) : (
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm font-sans font-semibold text-foreground truncate">{v.title}</span>
-                    <Badge variant="outline" className="text-[10px] font-sans shrink-0">{v.category}</Badge>
-                  </div>
-                  {v.description && <p className="text-xs text-muted-foreground font-sans mt-1 truncate">{v.description}</p>}
-                  <div className="flex gap-1.5 mt-2">
-                    {(["free", "paid"] as VideoAccessTier[]).map(tier => (
+                <>
+                  {/* Thumbnail */}
+                  <div className="relative aspect-video bg-muted/30">
+                    {v.drive_file_id ? (
+                      <img
+                        src={`https://drive.google.com/thumbnail?id=${v.drive_file_id}&sz=w400`}
+                        alt={v.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Film className="w-8 h-8 text-muted-foreground/40" />
+                      </div>
+                    )}
+                    {/* Sort controls overlay */}
+                    <div className="absolute top-1 left-1 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
-                        key={tier}
-                        onClick={() => quickTierMutation.mutate({ id: v.id, tier })}
-                        className={`px-2.5 py-1 rounded-full text-[11px] font-sans transition-all border ${
-                          v.access_tier === tier
-                            ? tier === "free"
-                              ? "bg-muted text-foreground border-muted-foreground/30"
-                              : "bg-primary/20 text-primary border-primary/30"
-                            : "bg-transparent text-muted-foreground border-transparent hover:border-border hover:bg-muted/30"
-                        }`}
+                        onClick={() => moveMutation.mutate({ id: v.id, direction: "up" })}
+                        disabled={idx === 0}
+                        className="bg-background/80 backdrop-blur-sm rounded p-0.5 text-foreground hover:bg-background disabled:opacity-30"
                       >
-                        {ACCESS_LABELS[tier]}
+                        <ChevronUp className="w-4 h-4" />
                       </button>
-                    ))}
+                      <button
+                        onClick={() => moveMutation.mutate({ id: v.id, direction: "down" })}
+                        disabled={idx === filtered.length - 1}
+                        className="bg-background/80 backdrop-blur-sm rounded p-0.5 text-foreground hover:bg-background disabled:opacity-30"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </button>
+                    </div>
+                    {/* Action buttons overlay */}
+                    <div className="absolute top-1 right-1 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => {
+                          setEditingId(v.id);
+                          setEditTitle(v.title);
+                          setEditLink(v.drive_link);
+                          setEditDesc(v.description ?? "");
+                          setEditCategory(v.category);
+                          setEditTier(v.access_tier as VideoAccessTier);
+                        }}
+                        className="bg-background/80 backdrop-blur-sm rounded p-1 text-foreground hover:bg-background"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => { if (confirm(`確定要刪除「${v.title}」嗎？`)) deleteMutation.mutate(v.id); }}
+                        className="bg-background/80 backdrop-blur-sm rounded p-1 text-destructive hover:bg-background"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-
-              {editingId !== v.id && (
-                <div className="flex gap-1 shrink-0">
-                  <button
-                    onClick={() => {
-                      setEditingId(v.id);
-                      setEditTitle(v.title);
-                      setEditLink(v.drive_link);
-                      setEditDesc(v.description ?? "");
-                      setEditCategory(v.category);
-                      setEditTier(v.access_tier as VideoAccessTier);
-                    }}
-                    className="text-muted-foreground hover:text-foreground p-1"
-                  >
-                    <Pencil className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (confirm(`確定要刪除「${v.title}」嗎？`)) deleteMutation.mutate(v.id);
-                    }}
-                    className="text-muted-foreground hover:text-destructive p-1"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                  {/* Info */}
+                  <div className="p-2.5">
+                    <p className="text-xs font-sans font-semibold text-foreground truncate mb-1.5">{v.title}</p>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <Badge variant="outline" className="text-[10px] font-sans px-1.5 py-0">{v.category}</Badge>
+                    </div>
+                    <div className="flex gap-1">
+                      {(["free", "paid"] as VideoAccessTier[]).map(tier => (
+                        <button
+                          key={tier}
+                          onClick={() => quickTierMutation.mutate({ id: v.id, tier })}
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-sans transition-all border ${
+                            v.access_tier === tier
+                              ? tier === "free"
+                                ? "bg-muted text-foreground border-muted-foreground/30"
+                                : "bg-primary/20 text-primary border-primary/30"
+                              : "bg-transparent text-muted-foreground border-transparent hover:border-border hover:bg-muted/30"
+                          }`}
+                        >
+                          {ACCESS_LABELS[tier]}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
               )}
             </motion.div>
           ))}
