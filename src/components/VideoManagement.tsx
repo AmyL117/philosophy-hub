@@ -229,6 +229,25 @@ const VideoManagement = () => {
               exit={{ opacity: 0, y: -10 }}
               className="flex items-start gap-3 p-4 rounded-lg border border-border bg-card"
             >
+              {/* Sort controls */}
+              <div className="flex flex-col gap-0.5 pt-0.5 shrink-0">
+                <button
+                  onClick={() => moveMutation.mutate({ id: v.id, direction: "up" })}
+                  disabled={filtered.indexOf(v) === 0}
+                  className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
+                >
+                  <ChevronUp className="w-4 h-4" />
+                </button>
+                <GripVertical className="w-4 h-4 text-muted-foreground/40 mx-auto" />
+                <button
+                  onClick={() => moveMutation.mutate({ id: v.id, direction: "down" })}
+                  disabled={filtered.indexOf(v) === filtered.length - 1}
+                  className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              </div>
+
               <Film className="w-5 h-5 text-primary shrink-0 mt-0.5" />
 
               {editingId === v.id ? (
