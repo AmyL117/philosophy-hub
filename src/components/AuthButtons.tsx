@@ -14,9 +14,9 @@ const TIER_ICONS: Record<MembershipTier, typeof User> = {
 };
 
 const TIER_BADGE_COLORS: Record<MembershipTier, string> = {
-  free_member: "bg-muted/50 text-muted-foreground border-border",
+  free_member: "bg-muted/50 text-foreground/70 border-border",
   paid_member: "bg-primary/15 text-primary border-primary/30",
-  premium_member: "bg-accent/15 text-accent border-accent/30",
+  premium_member: "bg-secondary/15 text-secondary border-secondary/30",
 };
 
 const AuthButtons = () => {
