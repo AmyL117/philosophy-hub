@@ -264,9 +264,8 @@ const VideoManagement = () => {
                     <Select value={editTier} onValueChange={v => setEditTier(v as VideoAccessTier)}>
                       <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="free" className="text-sm">免費觀看</SelectItem>
-                        <SelectItem value="paid" className="text-sm">付費會員</SelectItem>
-                        <SelectItem value="premium" className="text-sm">尊貴會員</SelectItem>
+                        <SelectItem value="free" className="text-sm">免費影片</SelectItem>
+                        <SelectItem value="paid" className="text-sm">收費影片</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
