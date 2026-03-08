@@ -9,7 +9,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [viewAsAdmin, setViewAsAdmin] = useState(true);
-  const isRealAdmin = user?.email === ADMIN_EMAIL;
+  const isRealAdmin = ADMIN_EMAILS.includes(user?.email ?? "");
   const isAdmin = isRealAdmin && viewAsAdmin;
 
   useEffect(() => {
