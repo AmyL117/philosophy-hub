@@ -122,7 +122,22 @@ const VideoManagement = () => {
     },
   });
 
-  const resetNewForm = () => {
+  const moveMutation = useMutation({
+    mutationFn: async ({ id, direction }: { id: string; direction: "up" | "down" }) => {
+      const idx = filtered.findIndex(v => v.id === id);
+      if (idx < 0) return;
+      const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+      if (swapIdx < 0 || swapIdx >= filtered.length) return;
+      const current = filtered[idx];
+      const swap = filtered[swapIdx];
+      await supabase.from("videos").update({ sort_order: swap.sort_order }).eq("id", current.id);
+      await supabase.from("videos").update({ sort_order: current.sort_order }).eq("id", swap.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["videos"] });
+    },
+  });
+
     setAdding(false);
     setNewTitle("");
     setNewDesc("");
