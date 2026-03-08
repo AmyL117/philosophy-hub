@@ -52,6 +52,7 @@ const QuoteSection = () => {
             </motion.div>
           ))}
         </div>
+        <ResourceEditor sectionKey="quotes" />
       </div>
     </section>
   );

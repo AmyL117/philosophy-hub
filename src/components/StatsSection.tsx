@@ -52,6 +52,7 @@ const StatsSection = () => {
             </motion.div>
           ))}
         </div>
+        <ResourceEditor sectionKey="stats" />
       </div>
     </section>
   );

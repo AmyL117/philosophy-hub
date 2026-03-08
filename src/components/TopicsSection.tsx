@@ -106,6 +106,7 @@ const TopicsSection = () => {
             </motion.div>
           ))}
         </div>
+        <ResourceEditor sectionKey="topics" />
       </div>
     </section>
   );

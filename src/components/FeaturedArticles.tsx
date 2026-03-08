@@ -120,6 +120,7 @@ const FeaturedArticles = () => {
             </motion.div>
           ))}
         </div>
+        <ResourceEditor sectionKey="articles" />
       </div>
     </section>
   );
