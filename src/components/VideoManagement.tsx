@@ -271,18 +271,18 @@ const VideoManagement = () => {
                       </div>
                     )}
                     {/* Sort controls overlay */}
-                    <div className="absolute top-1 left-1 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute top-1 left-1 flex flex-col gap-0.5">
                       <button
                         onClick={() => moveMutation.mutate({ id: v.id, direction: "up" })}
                         disabled={idx === 0}
-                        className="bg-background/80 backdrop-blur-sm rounded p-0.5 text-foreground hover:bg-background disabled:opacity-30"
+                        className="bg-background/90 backdrop-blur-sm rounded p-1 text-foreground hover:bg-primary/20 hover:text-primary disabled:opacity-30 transition-colors shadow-sm"
                       >
                         <ChevronUp className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => moveMutation.mutate({ id: v.id, direction: "down" })}
                         disabled={idx === filtered.length - 1}
-                        className="bg-background/80 backdrop-blur-sm rounded p-0.5 text-foreground hover:bg-background disabled:opacity-30"
+                        className="bg-background/90 backdrop-blur-sm rounded p-1 text-foreground hover:bg-primary/20 hover:text-primary disabled:opacity-30 transition-colors shadow-sm"
                       >
                         <ChevronDown className="w-4 h-4" />
                       </button>
