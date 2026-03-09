@@ -40,7 +40,11 @@ const Auth = () => {
         navigate("/");
       }
     } catch (err: any) {
-      toast({ title: "錯誤", description: err.message, variant: "destructive" });
+      let description = err.message;
+      if (err.message === "Invalid login credentials") {
+        description = "登入資料不正確。如果你是以 Google 帳號註冊的，請點擊上方「以 Google 帳號登入」按鈕。";
+      }
+      toast({ title: "錯誤", description, variant: "destructive" });
     } finally {
       setLoading(false);
     }
