@@ -28,7 +28,7 @@ export function useAuth() {
 
   const signInWithGoogle = async () => {
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/content`,
       extraParams: {
         prompt: "select_account",
       },

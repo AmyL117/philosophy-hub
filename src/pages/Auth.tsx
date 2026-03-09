@@ -37,7 +37,7 @@ const Auth = () => {
         });
         if (error) throw error;
         toast({ title: "登入成功" });
-        navigate("/");
+        navigate("/content");
       }
     } catch (err: any) {
       let description = err.message;
@@ -54,7 +54,7 @@ const Auth = () => {
     setLoading(true);
     try {
       const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/content`,
         extraParams: {
           prompt: "select_account",
         },
