@@ -123,13 +123,23 @@ const ContentTabs = () => {
             return (
               <TabsContent key={c.key} value={c.key}>
                 {c.requiresPaid && !canViewPaid ? (
-                  <div className="rounded-xl border border-border bg-card p-12 text-center">
-                    <Lock className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-serif font-bold text-foreground mb-2">需要付費會員</h3>
-                    <p className="text-sm text-muted-foreground font-sans">
-                      此內容僅限付費會員或尊貴會員查看，請聯絡管理員升級會員級別。
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="rounded-2xl border-2 border-dashed border-primary/20 bg-gradient-to-br from-card to-muted/30 p-16 text-center"
+                  >
+                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
+                      <Lock className="w-10 h-10 text-primary/60" />
+                    </div>
+                    <h3 className="text-xl font-serif font-bold text-foreground mb-3">此內容需要升級會員</h3>
+                    <p className="text-sm text-muted-foreground font-sans max-w-md mx-auto leading-relaxed mb-4">
+                      「{c.label}」分類僅限<span className="font-semibold text-primary">付費會員</span>或<span className="font-semibold text-accent">尊貴會員</span>查看。
                     </p>
-                  </div>
+                    <p className="text-xs text-muted-foreground/70 font-sans">
+                      如需升級，請聯絡管理員。
+                    </p>
+                  </motion.div>
                 ) : (
                   <div className="space-y-6">
                     {/* Google Drive folder embed */}
