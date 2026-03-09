@@ -29,9 +29,9 @@ const AuthButtons = () => {
 
   if (!user) {
     return (
-      <Button size="sm" variant="outline" onClick={signInWithGoogle} className="h-8 text-xs gap-1.5 font-sans">
+      <Button size="sm" variant="outline" onClick={() => navigate("/auth")} className="h-8 text-xs gap-1.5 font-sans">
         <LogIn className="w-3.5 h-3.5" />
-        Google 登入
+        登入 / 註冊
       </Button>
     );
   }
