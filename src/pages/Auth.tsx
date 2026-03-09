@@ -42,7 +42,7 @@ const Auth = () => {
     } catch (err: any) {
       let description = err.message;
       if (err.message === "Invalid login credentials") {
-        description = "登入資料不正確。如果你是以 Google 帳號註冊的，請點擊上方「以 Google 帳號登入」按鈕。";
+        description = "登入資料不正確；如果你是用 Google 註冊，請改用上方 Google 登入，或先按「立即註冊」建立密碼帳號。";
       }
       toast({ title: "錯誤", description, variant: "destructive" });
     } finally {
@@ -51,9 +51,35 @@ const Auth = () => {
   };
 
   const handleGoogle = async () => {
-    await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
+    setLoading(true);
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+        extraParams: {
+          prompt: "select_account",
+        },
+      });
+
+      if ((result as any)?.error) {
+        throw (result as any).error;
+      }
+
+      if (!(result as any)?.redirected) {
+        toast({ title: "登入成功" });
+        navigate("/content");
+      }
+    } catch (err: any) {
+      const isPreview = window.location.hostname.includes("lovableproject.com");
+      toast({
+        title: "錯誤",
+        description: isPreview
+          ? "Google 登入在預覽環境可能被瀏覽器限制，請允許彈出視窗，或改到已發佈網站登入。"
+          : err?.message ?? "Google 登入失敗，請稍後再試。",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
