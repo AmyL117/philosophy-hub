@@ -42,7 +42,7 @@ const Auth = () => {
     } catch (err: any) {
       let description = err.message;
       if (err.message === "Invalid login credentials") {
-        description = "登入資料不正確。如果你是以 Google 帳號註冊的，請點擊上方「以 Google 帳號登入」按鈕。";
+        description = "登入資料不正確；如果你是用 Google 註冊，請改用上方 Google 登入，或先按「立即註冊」建立密碼帳號。";
       }
       toast({ title: "錯誤", description, variant: "destructive" });
     } finally {
@@ -51,9 +51,35 @@ const Auth = () => {
   };
 
   const handleGoogle = async () => {
-    await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
+    setLoading(true);
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+        extraParams: {
+          prompt: "select_account",
+        },
+      });
+
+      if ((result as any)?.error) {
+        throw (result as any).error;
+      }
+
+      if (!(result as any)?.redirected) {
+        toast({ title: "登入成功" });
+        navigate("/content");
+      }
+    } catch (err: any) {
+      const isPreview = window.location.hostname.includes("lovableproject.com");
+      toast({
+        title: "錯誤",
+        description: isPreview
+          ? "Google 登入在預覽環境可能被瀏覽器限制，請允許彈出視窗，或改到已發佈網站登入。"
+          : err?.message ?? "Google 登入失敗，請稍後再試。",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -73,7 +99,7 @@ const Auth = () => {
         </div>
 
         {/* Google */}
-        <Button variant="outline" className="w-full gap-2 font-sans" onClick={handleGoogle}>
+        <Button variant="outline" className="w-full gap-2 font-sans" onClick={handleGoogle} disabled={loading}>
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>

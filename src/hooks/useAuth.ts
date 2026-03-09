@@ -27,9 +27,18 @@ export function useAuth() {
   }, []);
 
   const signInWithGoogle = async () => {
-    await lovable.auth.signInWithOAuth("google", {
+    const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
+      extraParams: {
+        prompt: "select_account",
+      },
     });
+
+    if ((result as any)?.error) {
+      throw (result as any).error;
+    }
+
+    return result;
   };
 
   const signOut = async () => {
