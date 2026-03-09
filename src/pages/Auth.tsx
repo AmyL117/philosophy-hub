@@ -37,7 +37,7 @@ const Auth = () => {
         });
         if (error) throw error;
         toast({ title: "登入成功" });
-        navigate("/");
+        navigate("/content");
       }
     } catch (err: any) {
       let description = err.message;
