@@ -142,27 +142,22 @@ const ContentTabs = () => {
                     </p>
                   </motion.div>
                 ) : (
-                  <div className="space-y-6">
-                    {/* Google Drive folder embed */}
+                  <div className="space-y-4">
+                    {/* Google Drive folder embed — compact */}
                     <div className="rounded-xl border border-border bg-card overflow-hidden">
-                      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30">
+                      <div className="flex items-center px-4 py-2 border-b border-border bg-muted/30">
                         <span className="text-xs font-sans text-muted-foreground">📁 {c.label} 影片資料夾</span>
-                        <a
-                          href={`https://drive.google.com/drive/folders/${c.folderId}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs font-sans text-primary hover:underline"
-                        >
-                          在 Google Drive 開啟 ↗
-                        </a>
                       </div>
                       <iframe
                         src={`https://drive.google.com/embeddedfolderview?id=${c.folderId}#grid`}
                         className="w-full border-0"
-                        style={{ height: "360px" }}
+                        style={{ height: "120px" }}
                         title={`${c.label} 影片資料夾`}
                       />
                     </div>
+
+                    {/* Editable content items */}
+                    <ContentItemEditor category={c.key} isAdmin={isAdmin} />
 
                     {/* Admin: database video controls */}
                     {isAdmin && (
