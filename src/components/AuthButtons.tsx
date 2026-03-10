@@ -20,8 +20,8 @@ const TIER_BADGE_COLORS: Record<MembershipTier, string> = {
 };
 
 const AuthButtons = () => {
-  const { user, loading, isAdmin, isRealAdmin, viewAsAdmin, setViewAsAdmin, signInWithGoogle, signOut } = useAuth();
-  const { tier } = useMembership();
+  const { user, loading, isAdmin, isRealAdmin, viewAsAdmin, setViewAsAdmin, signOut } = useAuth();
+  const { tier } = useMembership(user);
   const { editMode, setEditMode } = useEditMode();
   const navigate = useNavigate();
 
