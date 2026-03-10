@@ -144,10 +144,21 @@ const ContentTabs = () => {
                   <div className="space-y-6">
                     {/* Google Drive folder embed */}
                     <div className="rounded-xl border border-border bg-card overflow-hidden">
+                      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30">
+                        <span className="text-xs font-sans text-muted-foreground">📁 {c.label} 影片資料夾</span>
+                        <a
+                          href={`https://drive.google.com/drive/folders/${c.folderId}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-sans text-primary hover:underline"
+                        >
+                          在 Google Drive 開啟 ↗
+                        </a>
+                      </div>
                       <iframe
                         src={`https://drive.google.com/embeddedfolderview?id=${c.folderId}#grid`}
                         className="w-full border-0"
-                        style={{ height: "600px" }}
+                        style={{ height: "360px" }}
                         title={`${c.label} 影片資料夾`}
                       />
                     </div>
