@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      content_items: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          item_type: string
+          label: string
+          sort_order: number | null
+          updated_at: string
+          value: string | null
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          item_type?: string
+          label: string
+          sort_order?: number | null
+          updated_at?: string
+          value?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          item_type?: string
+          label?: string
+          sort_order?: number | null
+          updated_at?: string
+          value?: string | null
+        }
+        Relationships: []
+      }
       page_sections: {
         Row: {
           content: Json | null
