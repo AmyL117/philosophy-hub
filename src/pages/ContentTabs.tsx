@@ -26,7 +26,7 @@ const categories = [
 
 const ContentTabs = () => {
   const { user, loading: authLoading, isAdmin } = useAuth();
-  const { tier, loading: tierLoading, canViewPaid } = useMembership();
+  const { tier, loading: tierLoading, canViewPaid } = useMembership(user);
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
