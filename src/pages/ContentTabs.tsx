@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Brain, BookOpen, Shuffle, Lock, Crown, ChevronUp, ChevronDown, Film } from "lucide-react";
+import ContentItemEditor from "@/components/ContentItemEditor";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
