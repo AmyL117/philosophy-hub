@@ -3,13 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import type { User } from "@supabase/supabase-js";
 
-const ADMIN_EMAILS = ["silvestersss89@gmail.com", "amypy117@gmail.com"];
-
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [viewAsAdmin, setViewAsAdmin] = useState(true);
-  const isRealAdmin = ADMIN_EMAILS.includes(user?.email ?? "");
+  const [isRealAdmin, setIsRealAdmin] = useState(false);
   const isAdmin = isRealAdmin && viewAsAdmin;
 
   useEffect(() => {
@@ -19,20 +17,39 @@ export function useAuth() {
       if (mounted) setLoading(false);
     }, 4000);
 
+    const refreshAdmin = async (u: User | null) => {
+      if (!u) {
+        if (mounted) setIsRealAdmin(false);
+        return;
+      }
+      try {
+        const { data, error } = await supabase.rpc("is_admin");
+        if (!mounted) return;
+        setIsRealAdmin(!error && data === true);
+      } catch {
+        if (mounted) setIsRealAdmin(false);
+      }
+    };
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!mounted) return;
-      setUser(session?.user ?? null);
+      const u = session?.user ?? null;
+      setUser(u);
       setLoading(false);
+      // Defer to avoid deadlock inside auth callback
+      setTimeout(() => void refreshAdmin(u), 0);
     });
 
     supabase.auth
       .getSession()
       .then(({ data: { session } }) => {
         if (!mounted) return;
-        setUser(session?.user ?? null);
+        const u = session?.user ?? null;
+        setUser(u);
         setLoading(false);
+        void refreshAdmin(u);
       })
       .catch(() => {
         if (mounted) setLoading(false);
