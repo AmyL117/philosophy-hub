@@ -148,6 +148,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       videos: {
         Row: {
           access_tier: Database["public"]["Enums"]["video_access_tier"]
@@ -193,9 +214,17 @@ export type Database = {
     }
     Functions: {
       get_user_tier: { Args: { p_user_id: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
+      app_role: "admin" | "moderator" | "user"
       membership_tier: "free_member" | "paid_member" | "premium_member"
       video_access_tier: "free" | "paid" | "premium"
     }
@@ -325,6 +354,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "moderator", "user"],
       membership_tier: ["free_member", "paid_member", "premium_member"],
       video_access_tier: ["free", "paid", "premium"],
     },
