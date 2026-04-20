@@ -3,6 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        if (!window.location.hostname.endsWith("github.io")) return;
+
+        var path = window.location.pathname.replace(/^\/philosophy-hub/, "") || "/";
+        var target = "https://philosophy-hub.lovable.app" + path + window.location.search + window.location.hash;
+
+        window.location.replace(target);
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=https://philosophy-hub.lovable.app" />
+    </noscript>
     <!-- TODO: Set the document title to the name of your application -->
     <title>ME TIME 哲心探秘錄</title>
     <meta name="description" content="Thought Space is a modern, engaging website for exploring philosophy and psychology.">
